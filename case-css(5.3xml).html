@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    * {
+        box-sizing: border-box;
+    }
+    .header, .footer {
+      background-color: rgb(100, 99, 99);
+      color: white;
+      padding: 20px;
+    }
+    .box ul{
+      list-style-type: none;
+      margin: 0;
+      padding:0;
+      overflow: hidden;
+      background-color: #434242;
+    }
+
+    .box li {
+      float: left;
+    }
+
+    .box li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    .box li a:hover:not(.active) {
+      background-color: #111;
+    }
+
+    .active {
+      background-color: #e21f1f;
+    }
+    .list1 {
+      float: left;
+      padding: 15px;
+    }
+    
+    .list::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+    
+    .list2 {
+      width: 30%;
+    }
+    
+    .content {
+      width: 75%;
+      position:relative;
+      top: 45px;
+      left: 20px;
+    }
+    .list2 ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+.list2 li {
+  padding: 10px;
+  margin-bottom: 8px;
+  background-color: #37b7e6;
+  color: #ffffff;
+}
+
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Chania</h1>
+  </div>
+  <br>
+  <div class="box">
+    <ul>
+      <li><a class="active" href="#home">Home</a></li>
+      <li><a href="#news">News</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+  </div>
+  <div class="list">
+    <div class="list1 list2">
+      <ul>
+        <li>The Flight</li>
+        <li>The City</li>
+        <li>The Island</li>
+        <li>The Food</li>
+      </ul>
+    </div>
+    
+    <div class="content">
+      <h1>The City</h1>
+      <p>China is the capital of the Chania region on the island of Crete
+      </p>
+    </div>
+  </div>
+  
+  <div class="footer">
+    <p>Footer Text</p>
+  </div>
+</body>
+</html>
