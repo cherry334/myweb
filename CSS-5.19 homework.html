@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html { 
+            background: url(ditu.jpg) no-repeat center fixed; 
+            background-size: cover;
+            }
+        .tup {
+            width: 120px;
+        }
+        ul {
+            display: inline-block;
+            list-style-type: none;
+            margin: 8px;
+            padding: 0;
+            overflow: hidden;
+            /* background-color: #333; */
+            }
+
+        li {
+            float: left;
+            }
+
+        li a, .more {
+            display: inline-block;
+            color: rgb(134, 132, 132);
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            }
+
+        li a:hover, .dropdown:hover .more {
+            /* background-color: red; */
+            color: rgb(86, 115, 231);
+            border-radius: 10px;
+            }
+
+        li.dropdown {
+            display: inline-block;
+            }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fefeff;
+            border-radius: 10px;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            }
+
+        .dropdown-content a {
+            color: rgb(150, 146, 146);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            }
+
+       
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            }
+        .Search{
+            width: 50px;
+            margin: 100px auto ;
+            }
+        .text{
+            width: 700px;
+            height: 40px;
+            border-radius: 15px;
+            border: 1px;
+            margin-left: -300px;
+            background-color: rgb(249, 242, 232);
+            /* background-image: url('search-img.png') no-repeat  */
+            }
+        #search {
+            text-align: center;
+            margin-top: 30px;
+            padding: 5px 15px;
+            background-color: #fefeff;
+            color: rgb(132, 133, 134);
+            border: none;
+            border-radius: 5px;
+             /* font-size: px; */
+            }
+    </style>
+</head>
+<body >
+    <div>
+        <img class="tup" src="WechatIMG18.png" alt="">
+       <ul>
+            <li><a href="#">picture</a></li>
+            <li><a href="#">video</a></li>
+            <li class="dropdown">
+                <a href="#" class="more">more</a>
+                <div class="dropdown-content">
+                    <a href="#">map</a>
+                    <a href="#">news</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="Search">
+        <form action="">
+            <input type="text" class="text">
+            <div class="btn">
+                <button id="search">search</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
