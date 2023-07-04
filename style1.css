@@ -1,0 +1,208 @@
+
+/* 分栏2 */
+body{
+    background-color: #7D8BAE;
+    height: 100%;
+}
+#main{
+    background-color: rgb(183, 70, 70);
+    border-radius: 15px;
+    width: 95%;
+    height: 1150px;
+    padding: 30px 30px ; 
+    margin: 0px;
+}
+#banner,#header{
+    padding: 16px;
+   
+}
+.logo{
+    text-decoration: none;
+    color: #111;
+    font-family: Georgia, serif;
+    margin-bottom: 80px;
+}
+/* 水平导航栏 */
+ul.icons {
+    list-style-type: none;
+    overflow: hidden;
+    background-color:#202030;
+    background-image: linear-gradient(to right, rgb(242, 184, 184) , rgb(45, 45, 81));
+}
+
+/* 列表样式 */
+.icons li {
+    float:right;
+    height: 40px;
+}
+.label {
+    float: left;
+}
+/* 与下面的列表进行区分 */
+.icons a { 
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 10px 16px;
+    text-decoration: none;
+}
+.icons a:hover {
+    background-color: #9f4a4a;
+    border: #9f4a4a solid;
+    border-radius: 13px;
+    height: 12px;
+}
+header{
+    font-size: larger;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+/*按钮统一设置*/
+.actions {
+    background-color: #E8CCC7;
+    border: #3e1616 2px;
+    padding: 5px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 0px 2px 18px;
+    cursor: pointer;
+    list-style-type: none;
+    border-radius: 5px;
+}
+.button{
+    color: rgb(255, 255, 255);
+  
+}
+.content{
+    display: inline-block;
+    /* float: left; */
+    width: 50%;
+    height: 10%;
+    position: relative;
+    right: -11px;
+
+}
+/* 图片右浮动 */
+#banner img{
+    position: relative;
+    top: 0px;
+    left:-50px;
+    width: 35%;
+    float: right;
+    border-radius: 15px;
+}
+/* 单独设置banner内容的样式 */
+#banner .content{
+    border: #888888 solid;
+    padding:0px 20px 20px ;
+    background-color: #f3fdd6;
+}
+/* 统一设置文章板块 */
+.features article{
+    display: inline-block;
+    width: 50%;
+    float: left;
+    margin-bottom: 100px;
+}
+
+.posts article{
+    display: inline;
+    width:25%;
+    float: left;
+    clear: right;
+    margin: 10px 100px 40px 0px;
+    color: #e8e6e6;
+}
+.content{
+    border: #ffd6d6 dotted;
+    background-color: #fffeea;
+    padding:0px 70px 20px ;
+    box-shadow:5px 5px  #c9e3f0;
+}
+/* 文本颜色 */
+a ~ p{
+    color: #ece7e7;
+    width: 420px;
+}
+article img{
+    border-radius: 10px;
+}
+h3{
+    width: 200px;
+}
+
+
+
+/* 侧边栏 */ 
+#sidebar{
+    /* float: left; */
+    background-color:#202030;
+    width: 100%;
+    display: inline-block;
+    padding: 30px 10px; 
+    border-radius: 15px;
+}
+
+#search input{
+    border: #8c8e8e 2px;
+    border-radius: 2px;
+    width: 85%;
+    height: 25px;
+    margin: 50px 90px 0px;
+}
+.major{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin: 65px 50px 50px;
+    color: #ffffff;
+    border-bottom: #612e2e solid 5px;
+    width: 400px;
+    
+}
+.contact,#menu ul {
+    list-style-type: none;
+    margin: 0px 50px 0px ;
+    padding: 0;  
+} 
+#menu li{
+    color: #ffffff;
+    padding: 8px 16px;
+    box-shadow: 3px 5px 5px  #e8e6e6;
+    text-transform: uppercase;
+    font-size: small;
+    border: #E8CCC7 solid;
+    width: 500px;
+}
+/* menu跟contact不一样，contact第一个li是<a> 标签*/
+.contact li {
+    color: #ffffff;
+    box-shadow: 5px 5px 5px #888888;
+    padding: 8px 16px;
+    border: #E8CCC7 solid;
+    width: 500px;
+}
+li a {
+    display: block; 
+    color: #ffffff;
+    text-decoration: none;
+}
+section > p{
+    width: 850px;
+    padding: auto;
+    margin: 0px 50px ;
+    color: #ffffff;
+}
+#footer{
+    color: #ffffff;
+    border-top-style:solid #757778 ;
+    padding-top: 50px;
+    display: inline-block;
+}
+footer  p {
+    color: #c9e3f0;
+    margin: 0px 40px ;
+}
+.copyright a{
+    color: #ffffff;
+    text-decoration: none;
+}
