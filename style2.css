@@ -5,11 +5,9 @@
     float: right;
     width: 75%;
     padding: 30px 20px;
-    
 }
 #banner,#header{
-    padding: 16px;
-   
+    padding: 16px; 
 }
 .logo{
     text-decoration: none;
@@ -135,7 +133,6 @@ li a {
     color: #757778;
     text-decoration: none;
 }
-
 #footer{
     color: #888888;
     border-top-style:solid #757778 ;
