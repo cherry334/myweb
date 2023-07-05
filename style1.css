@@ -1,35 +1,33 @@
 
-/* 分栏2 */
 body{
-    background-color: #7D8BAE;
+    background-color: #1d6671;
     height: 100%;
-}
+}/*对整个body进行配色*/
 #main{
-    background-color: rgb(183, 70, 70);
+    background-color: rgb(243, 113, 33);
     border-radius: 15px;
     width: 95%;
     height: 1150px;
     padding: 30px 30px ; 
     margin: 0px;
-}
+}/*对main设置颜色，圆角*/
 #banner,#header{
     padding: 16px;
-   
-}
+}/*导航栏和主页的padding*/
 .logo{
     text-decoration: none;
     color: #111;
     font-family: Georgia, serif;
     margin-bottom: 80px;
 }
-/* 水平导航栏 */
+/* 水平导航栏，渐变色 */
 ul.icons {
     list-style-type: none;
     overflow: hidden;
     background-color:#202030;
-    background-image: linear-gradient(to right, rgb(242, 184, 184) , rgb(45, 45, 81));
+    background-image: linear-gradient(to right, rgb(247, 215, 187) , rgb(50, 79, 103));
+    border-radius: 11px;
 }
-
 /* 列表样式 */
 .icons li {
     float:right;
@@ -38,7 +36,7 @@ ul.icons {
 .label {
     float: left;
 }
-/* 与下面的列表进行区分 */
+/* 与最下面的列表进行区分 */
 .icons a { 
     display: block;
     color: white;
@@ -51,7 +49,7 @@ ul.icons {
     border: #9f4a4a solid;
     border-radius: 13px;
     height: 12px;
-}
+}/*悬浮的样式*/
 header{
     font-size: larger;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -74,14 +72,13 @@ header{
     color: rgb(255, 255, 255);
   
 }
+/* 主页内容 */
 .content{
     display: inline-block;
-    /* float: left; */
     width: 50%;
     height: 10%;
     position: relative;
     right: -11px;
-
 }
 /* 图片右浮动 */
 #banner img{
@@ -98,14 +95,14 @@ header{
     padding:0px 20px 20px ;
     background-color: #f3fdd6;
 }
-/* 统一设置文章板块 */
+/* 文章板块分开设置 */
 .features article{
     display: inline-block;
     width: 50%;
     float: left;
     margin-bottom: 100px;
+    font-family: 'Courier New', Courier, monospace;
 }
-
 .posts article{
     display: inline;
     width:25%;
@@ -113,18 +110,21 @@ header{
     clear: right;
     margin: 10px 100px 40px 0px;
     color: #e8e6e6;
+    font-family: 'Courier New', Courier, monospace;
 }
+/* 设置阴影 */
 .content{
     border: #ffd6d6 dotted;
     background-color: #fffeea;
     padding:0px 70px 20px ;
     box-shadow:5px 5px  #c9e3f0;
 }
-/* 文本颜色 */
+/* 文本颜色，与a同级的所有p标签 */
 a ~ p{
     color: #ece7e7;
     width: 420px;
 }
+/* 对图片设置圆角 */
 article img{
     border-radius: 10px;
 }
@@ -143,7 +143,7 @@ h3{
     padding: 30px 10px; 
     border-radius: 15px;
 }
-
+/* 搜索框样式 */
 #search input{
     border: #8c8e8e 2px;
     border-radius: 2px;
@@ -151,19 +151,21 @@ h3{
     height: 25px;
     margin: 50px 90px 0px;
 }
+/* h2标题内容样式，包括主页的h2 ，加了底线*/
 .major{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     margin: 65px 50px 50px;
     color: #ffffff;
     border-bottom: #612e2e solid 5px;
     width: 400px;
-    
 }
+/* 两个列表的样式组合设置 */
 .contact,#menu ul {
     list-style-type: none;
     margin: 0px 50px 0px ;
     padding: 0;  
 } 
+/* menu的列表项 */
 #menu li{
     color: #ffffff;
     padding: 8px 16px;
@@ -186,22 +188,24 @@ li a {
     color: #ffffff;
     text-decoration: none;
 }
+/* section的子元素 */
 section > p{
     width: 850px;
     padding: auto;
     margin: 0px 50px ;
     color: #ffffff;
 }
+
 #footer{
-    color: #ffffff;
-    border-top-style:solid #757778 ;
     padding-top: 50px;
     display: inline-block;
 }
+/* 页脚的段落样式 */
 footer  p {
     color: #c9e3f0;
     margin: 0px 40px ;
 }
+/* 页脚链接的字体样式 */
 .copyright a{
     color: #ffffff;
     text-decoration: none;
