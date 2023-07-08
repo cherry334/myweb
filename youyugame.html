@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>鱿鱼游戏</title>
+    <style>
+        /* 样式设置 */
+        .game-container {
+            width: 500px;
+            height: 500px;
+            background-color: #eee;
+            position: relative;
+        }
+        .start-point,
+        .end-point {
+            width: 50px;
+            height: 50px;
+            background-color: green;
+            position: absolute;
+        }
+
+        .start-point {
+            top: 0;
+            left: 0;
+
+        }
+        .end-point {
+            bottom: 0;
+            right: 0;
+        }
+
+        .timer {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        .timer-2 {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+        .level-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            text-align: center;
+            display: none;
+        }
+        .player {
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            grid-template-rows: repeat(10, 1fr);
+            width: 500px;
+            height: 500px;
+        }
+        .cell {
+            width: 50px;
+            height: 50px;
+        }
+
+        @keyframes fade {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+        .audio {
+            color: rgb(255, 149, 0);
+            font-weight: 700;
+            position: absolute;
+            top: 20px;
+            left: 200px;
+            animation-name: fade;
+            animation-duration: 6s;
+            animation-delay: 4s;
+            animation-iteration-count: 6;
+
+        }
+        .sure-btn {
+            position: absolute;
+            left: 200px;
+            top: 60%;
+        }
+        #ball {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: red;
+            top: 460px;
+            left: 250px;
+        }
+        #hole {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: black;
+            top: 40px;
+            left: 20%;
+            transform: translate(-50%, -50%);
+        }
+        .clickable {
+            position: absolute;
+            background-color: #efdada;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 50%;
+        }
+        #chance {
+            position: absolute;
+            bottom: -30px;
+            left: 40%;
+            right: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="game-container" id="game-container">
+        <div class="level-1" id="level-1">
+            <div id="grid"></div>
+            <div class="start-point"></div>
+            <div class="end-point"></div>
+            <div class="timer"></div>
+            <div class="player" id="player"></div>
+            <div class="audio" id="mutouren">123木头人</div>
+        </div>
+
+        <div id="enter-2" style="display: none;">
+            <div class="level-message" id="level-message-1">恭喜你，进入下一关！</div>
+            <button onclick="enterLevel2()" id="level-1-sure" class="sure-btn">确定</button>
+        </div>
+
+        <div class="level-2" id="level-2" style="display: none;">
+            <canvas id="canvas" width="500" height="500"></canvas>
+            <div class="timer-2" id="timer-2"></div>
+        </div>
+
+        <div class="level-message" id="level-message-2">
+            恭喜你，进入下一关！
+            <button onclick="enterLastGame()">确定</button>
+        </div>
+
+        <div id="level-3" style="display: none;">
+
+            <div id="hole"></div>
+            <div class="clickable" id="clickable"></div>
+            <div id="ball"></div>
+            <div id="chance">还有3次机会</div>
+        </div>
+
+        <div class="level-message" id="level-message-3">游戏通关！</div>
+    </div>
+
+    <script>
+        var level = 1; // 当前关卡
+        var timer; // 计时器
+        // 第二关初始化
+        function initSecondGame() {
+            console.log("init second game")
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+
+            var shapes = ["umbrella", "star", "triangle", "circle"]; // 图案的样式
+            var randomShape = shapes[Math.floor(Math.random() * shapes.length)]; // 随机选择一个图案
+            var isDrawing = false;
+            var isChallengeCompleted = false;
+            let countdown = 60;
+            let points = [];
+            // 绘制图案
+            function drawShape() {
+                console.log('draw shape', canvas.width, canvas.height);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                ctx.beginPath();
+                if (randomShape === "umbrella") {
+                    ctx.moveTo(250, 250);
+                    ctx.lineTo(200, 400);
+                    ctx.moveTo(250, 250);
+                    ctx.lineTo(300, 400);
+                    ctx.moveTo(200, 400);
+                    ctx.lineTo(300, 400);
+                    ctx.closePath();
+                } else if (randomShape === "star") {
+                    ctx.moveTo(250, 50);
+                    ctx.lineTo(200, 250);
+                    ctx.lineTo(100, 350);
+                    ctx.lineTo(225, 350);
+                    ctx.lineTo(150, 500);
+                    ctx.lineTo(250, 400);
+                    ctx.lineTo(350, 500);
+                    ctx.lineTo(275, 350);
+                    ctx.lineTo(400, 250);
+                    ctx.lineTo(300, 250);
+                    ctx.closePath();
+                } else if (randomShape === "triangle") {
+                    ctx.moveTo(250, 150);
+                    ctx.lineTo(150, 450);
+                    ctx.lineTo(350, 450);
+                    ctx.closePath();
+                } else if (randomShape === "circle") {
+                    ctx.arc(250, 250, 200, 0, 2 * Math.PI);
+                }
+
+                // Set the stroke color
+                ctx.strokeStyle = "red";
+
+                // Set the line width
+                ctx.lineWidth = 30;
+
+                ctx.stroke();
+            }
+
+            // 验证玩家是否完成挑战
+            function validateChallenge() {
+                const [point1, point2] = points;
+                const xDiff = point2.x - point1.x;
+                const yDiff = point2.y - point1.y;
+
+                const distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+                console.log("distance", distance);
+                if (distance < 30 && isChallengeCompleted === true) {
+                    isChallengeCompleted = true;
+                } else {
+                    isChallengeCompleted = false;
+                }
+            }
+            // 监听鼠标按下事件
+            canvas.addEventListener("mousedown", function (event) {
+                isDrawing = true;
+                ctx.beginPath();
+                ctx.moveTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);
+                points.push({ x: event.clientX - canvas.offsetLeft, y: event.clientY - canvas.offsetTop });
+                console.log(points);
+            });
+            // 监听鼠标移动事件
+            canvas.addEventListener("mousemove", function (event) {
+                if (isDrawing) {
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = "black";
+                    ctx.lineTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);
+                    ctx.stroke();
+
+                    const rect = canvas.getBoundingClientRect();
+                    const x = event.clientX - rect.left;
+                    const y = event.clientY - rect.top;
+                    const pixel = ctx.getImageData(x, y, 1, 1).data;
+                    const color = `rgb(${pixel[0]}, ${pixel[1]}, ${pixel[2]})`;
+                    console.log(color);
+                    if (pixel[0] !== 255) {
+                        isChallengeCompleted = false;
+                    } else {
+                        isChallengeCompleted = true;
+                    }
+
+                }
+            });
+            // 监听鼠标松开事件
+            canvas.addEventListener("mouseup", function (event) {
+                points.push({ x: event.clientX - canvas.offsetLeft, y: event.clientY - canvas.offsetTop });
+                console.log(points);
+                isDrawing = false;
+                validateChallenge();
+                if (!isChallengeCompleted) {
+                    alert("很遗憾，本次挑战结束");
+                    resetGame();
+                } else {
+                    showElementById('level-message-2');
+                    hideElementById('level-2');
+                }
+            });
+            drawShape();
+            function startCountdown() {
+                let timer = setInterval(function () {
+                    countdown--;
+                    console.log(countdown + "s");
+                    const timer2 = document.getElementById('timer-2');
+                    timer2.innerHTML = countdown + 's';
+
+                    if (countdown <= 0) {
+                        clearInterval(timer);
+                        console.log("倒计时结束");
+                        if (!isChallengeCompleted) {
+                            alert('很遗憾，本次挑战结束');
+                            resetGame();
+                        }
+                    }
+                }, 1000);
+            }
+            startCountdown();
+
+
+        }
+        // 第三关初始化
+        function initThirdGame() {
+            let chance = 3;
+            // window.addEventListener('DOMContentLoaded', (event) => {
+            console.log('third game')
+            const ball = document.getElementById('ball');
+            const hole = document.getElementById('hole');
+            const gameContainer = document.getElementById('game-container');
+            const gameWidth = gameContainer.offsetWidth;
+            const gameHeight = gameContainer.offsetHeight;
+
+            function setChance(chance) {
+                const chanceDiv = document.getElementById('chance');
+                chanceDiv.innerHTML = `还有${chance}次机会`
+            }
+
+            let isBallInHole = false;
+
+            function shoot() {
+                const clickable = document.getElementById('clickable');
+                clickable.addEventListener('click', (event) => {
+                    console.log('shoot');
+
+                    var targetElement = ball;
+
+                    // 获取鼠标相对于容器元素的坐标
+                    var mouseX = event.clientX - gameContainer.offsetLeft;
+                    var mouseY = event.clientY - gameContainer.offsetTop;
+
+                    function getBallLocation(ball) {
+                        // 获取弹珠元素在容器元素中的坐标
+                        var rect = ball.getBoundingClientRect();
+                        var ballX = rect.left - gameContainer.offsetLeft;
+                        var ballY = rect.top - gameContainer.offsetTop;
+                        return [ballX, ballY]
+                    }
+
+                    // 判断目标是否在容器中
+                    function targetInContainer(target, container) {
+                        // 获取容器元素的范围
+                        var containerRect = container.getBoundingClientRect();
+
+                        // 获取目标元素的范围
+                        var targetRect = target.getBoundingClientRect();
+
+                        // 判断目标元素是否在容器元素范围内
+                        var isInside = targetRect.left >= containerRect.left &&
+                            targetRect.right <= containerRect.right &&
+                            targetRect.top >= containerRect.top &&
+                            targetRect.bottom <= containerRect.bottom;
+
+                        return isInside;
+
+                    }
+                    let [ballX, ballY] = getBallLocation(ball);
+                    // 计算斜率
+                    var slope = Math.abs((mouseY - ballY) / (mouseX - ballX));
+
+                    // 打印斜率
+                    console.log("斜率为: " + slope);
+                    // 计算移动方向
+                    var directionX = mouseX > ballX ? 1 : -1;
+                    var directionY = mouseY > ballY ? 1 : -1;
+                    // 设置每帧移动的距离
+                    var speed = 1;
+
+                    // 每帧移动球元素
+                    function moveBall() {
+                        // 计算球元素的新位置
+                        var newBallX = ballX + speed * directionX;
+                        var newBallY = ballY + (speed * slope * directionY);
+
+                        // 更新球元素的位置
+                        ball.style.left = newBallX + "px";
+                        ball.style.top = newBallY + "px";
+
+                        // 更新球元素的位置信息
+                        ballX = newBallX;
+                        ballY = newBallY;
+
+                        //进洞
+                        if (targetInContainer(ball, hole)) {
+                            alert('恭喜你，完成挑战！');
+                            resetGame();
+                            return;
+                        }
+
+                        // 判断是否到达目标位置
+                        if (targetInContainer(ball, gameContainer)) {
+                            requestAnimationFrame(moveBall);
+                        } else {
+                            chance--;
+                            if (chance === 0) {
+                                alert('很遗憾，本次挑战结束');
+                                resetGame();
+                            } else {
+                                setChance(chance);
+                                ball.style.top = '460px';
+                                ball.style.left = '250px';
+                            }
+                        }
+                    }
+
+                    moveBall();
+
+                })
+            }
+            shoot();
+            function checkCollision(ball, hole) {
+                const ballRect = ball.getBoundingClientRect();
+                const holeRect = hole.getBoundingClientRect();
+
+                return (
+                    ballRect.left <= holeRect.right &&
+                    ballRect.right >= holeRect.left &&
+                    ballRect.top <= holeRect.bottom &&
+                    ballRect.bottom >= holeRect.top
+                );
+            }
+
+        }
+        // 进入最后一关
+        function enterLastGame() {
+            hideElementById('level-message-2');
+            showElementById('level-3');
+            initThirdGame();
+        }
+        function hideElementById(id) {
+            const elm = document.getElementById(id);
+            elm.style.display = 'none';
+        }
+        function showElementById(id) {
+            const elm = document.getElementById(id);
+            elm.style.display = 'block';
+        }
+        function enterLevel2() {
+            level = 2;
+            hideElementById('enter-2');
+            showElementById('level-2');
+            console.log('enter level 2')
+            initSecondGame();
+        }
+        function startGame() {
+            const colors = [];
+            // 初始化游戏界面
+            var gameContainer = document.querySelector('.game-container');
+            var timerElement = document.querySelector('.timer');
+            var levelMessageElements = document.querySelectorAll('.level-message');
+            var currentLevelMessage = document.querySelector('#level-message-' + level);
+
+            grid();
+            movePlayer();
+            gameContainer.focus();
+
+            timer = setInterval(updateTimer, 1000);
+
+            // 第一关开始计时
+            if (level === 1) {
+                timerElement.innerText = '60';
+            }
+            // 显示当前关卡的提示信息
+            // currentLevelMessage.style.display = '';
+        }
+
+        //生成路线
+        function generateWay() {
+            // 创建一个10*10的矩阵
+            var colors = [];
+            for (var i = 0; i < 10; i++) {
+                colors[i] = [];
+                for (var j = 0; j < 10; j++) {
+                    colors[i][j] = 0; // 0表示空白格子
+                }
+            }
+            // 生成路线
+            var currentX = 0;
+            var currentY = 0;
+            colors[currentX][currentY] = 1; // 1表示路线
+
+            while (currentX !== 9 || currentY !== 9) {
+                // 在每一步中，随机选择向右或向下移动
+                if (Math.random() < 0.5 && currentX < 9) {
+                    currentX++;
+                } else if (currentY < 9) {
+                    currentY++;
+                }
+                colors[currentX][currentY] = 1; // 将当前位置标记为路线
+            }
+            return colors;
+        }
+        // 方格
+        function grid() {
+            // 获取容器元素
+            const grid = document.getElementById('grid');
+            grid.classList.add('grid');
+
+            // 定义方格的行数和列数
+            const rows = 10;
+            const columns = 10;
+
+            //定义在startGame
+            colors = generateWay();
+
+            // 生成方格元素
+            function createGrid() {
+                for (let i = 0; i < rows; i++) {
+                    for (let j = 0; j < columns; j++) {
+                        // 创建方格元素
+                        const cell = document.createElement('div');
+                        cell.classList.add('cell');
+
+                        if (colors[i][j] === 1) {
+                            cell.style.backgroundColor = '#a2cea2';
+                        }
+
+                        // 将方格添加到容器中
+                        grid.appendChild(cell);
+
+                    }
+                }
+            }
+
+            // 调用函数生成方格
+            createGrid();
+        }
+        function movePlayer(event) {
+            // 检测玩家移动操作
+            var box = document.getElementById('player');
+            console.log(box, 'box')
+            var boxLeft = 0;
+            var boxTop = 0;
+            var step = 10;
+
+            function isPlaying() {
+                //判断123木头人有没有在播放
+                const mutouren = document.getElementById('mutouren');
+                var opacityValue = window.getComputedStyle(mutouren).getPropertyValue("opacity");
+
+                if (opacityValue > 0.1) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            function getLocation() {
+                var parentElement = document.getElementById("game-container");
+                var childElement = document.getElementById("player");
+
+                var parentRect = parentElement.getBoundingClientRect();
+                var childRect = childElement.getBoundingClientRect();
+
+                var relativeLeft = childRect.left - parentRect.left;
+                var relativeTop = childRect.top - parentRect.top;
+                console.log('location', relativeLeft, relativeTop);
+                return [relativeLeft, relativeTop];
+            }
+
+            function locationSafe(x, y) {
+                var rowIndex = Math.floor(y / 50);
+                var colIndex = Math.floor(x / 50);
+                var value = colors[rowIndex][colIndex];
+                if (value === 1) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            // 到达终点
+            function locationArrive(x, y) {
+                var rowIndex = Math.floor(y / 50);
+                var colIndex = Math.floor(x / 50);
+                if (rowIndex === 9 && colIndex === 9) {
+                    console.log('arrive', x, y, rowIndex, colIndex);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            document.addEventListener('keydown', function (event) {
+                if (level !== 1) return;
+                const [relativeLeft, relativeTop] = getLocation();
+
+                if (!isPlaying() || !locationSafe(relativeLeft, relativeTop)) {
+                    gameFailed();
+                }
+                if (locationArrive(relativeLeft, relativeTop)) {
+                    // 进入第二关
+                    const level1 = document.getElementById('level-1');
+                    level1.style.display = 'none';
+
+                    const nextLevel = document.getElementById('enter-2');
+                    nextLevel.style.display = 'block';
+
+                    const msg = document.getElementById('level-message-1');
+                    msg.style.display = 'block';
+
+                    clearInterval(timer);
+
+
+                } else {
+                    const nextLevel = document.getElementById('enter-2');
+                    nextLevel.style.display = 'none';
+                }
+                switch (event.keyCode) {
+                    case 37: // 左箭头
+                        boxLeft -= step;
+                        break;
+                    case 38: // 上箭头
+                        boxTop -= step;
+                        break;
+                    case 39: // 右箭头
+                        boxLeft += step;
+                        break;
+                    case 40: // 下箭头
+                        boxTop += step;
+                        break;
+                }
+                box.style.left = boxLeft + 'px';
+                box.style.top = boxTop + 'px';
+            });
+
+
+        }
+        function showMutouren() {
+            const mutouren = document.getElementById('mutouren');
+            mutouren.style.display = 'block';
+        }
+        function hideMutouren() {
+            const mutouren = document.getElementById('mutouren');
+            mutouren.style.display = 'none';
+        }
+        function updateTimer() {
+            // 更新计时器
+            var timerElement = document.querySelector('.timer');
+            var time = parseInt(timerElement.innerText);
+
+            if (time <= 0) {
+                clearInterval(timer);
+                gameFailed();
+            } else {
+                timerElement.innerText = (time - 1).toString();
+            }
+
+        }
+        function gameFailed() {
+            // 游戏失败处理
+            alert('游戏失败！');
+            resetGame();
+        }
+
+        function gameCompleted() {
+            // 游戏通关处理
+            alert('恭喜你，游戏通关！');
+            resetGame();
+        }
+        function resetGame() {
+            location.reload();
+        }
+        function goToNextLevel() {
+            // 进入下一关
+            clearInterval(timer);
+            var timerElement = document.querySelector('.timer');
+            var levelMessageElements = document.querySelectorAll('.level-message');
+            var currentLevelMessage = document.querySelector('#level-message-' + level);
+
+            timerElement.innerText = '';
+            levelMessageElements.forEach(function (element) {
+                element.style.display = 'none';
+            });
+            level++;
+            if (level > 3) {
+                gameCompleted();
+            } else {
+                startGame();
+            }
+        }// 游戏开始
+        startGame();
+    </script>
+</body>
+
+</html>
